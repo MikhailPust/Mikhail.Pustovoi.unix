@@ -4,11 +4,9 @@ set -eu
 
 cleanup() {
     rc=$?
-    [ -n "${tmpdir:-}" ] && [ -d "$tmpdir" ] && rm -rf -- "$tmpdir"
+    [ -d "$tmpdir" ] && rm -rf -- "$tmpdir"
     exit $rc
 }
-
-trap 'cleanup' EXIT SIGINT SIGTERM SIGHUP SIGQUIT
 
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <sourcefile>"
@@ -46,6 +44,8 @@ fi
 outname=$(basename -- "$output")
 
 tmpdir=$(mktemp -d) || { echo "mktemp failed"; exit 5; }
+
+trap 'cleanup' EXIT SIGINT SIGTERM SIGHUP SIGQUIT
 
 cp -- "$src" "$tmpdir/"
 cd "$tmpdir" || { echo "cd to tmpdir failed"; exit 6; }
