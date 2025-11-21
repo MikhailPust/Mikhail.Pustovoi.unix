@@ -1,5 +1,8 @@
 #!/bin/sh
-S=/shared L=$S/.lock I=$(hostname|cut -c1-8) C=0
+S=/shared 
+L=$S/.lock 
+I=$(hostname) 
+C=0
 mkdir -p $S; touch $L
 
 exec 200>"$L"
