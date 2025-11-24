@@ -7,7 +7,7 @@ mkdir -p $S; touch $L
 
 exec 200>"$L"
 
-while :; do
+while true; do
 	current_file=""
 	flock -x 200
 	i=1
